@@ -36,8 +36,7 @@ class RawDataImporter(AbstractRawDataImporter):
         Raises:
             TypeError: In case of downloaded dataset is not pd.DataFrame
         """
-        dataset = load_dataset(self._hf_name, split='test')
-        self._raw_data = pd.DataFrame(dataset)
+        self._raw_data = load_dataset(self._hf_name, split='test').to_pandas()
 
         if not isinstance(self._raw_data, pd.DataFrame):
             raise TypeError("The downloaded dataset is not pd.DataFrame")

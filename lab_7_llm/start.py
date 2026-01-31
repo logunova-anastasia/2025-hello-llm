@@ -4,20 +4,18 @@ Starter for demonstration of laboratory work.
 
 import json
 from pathlib import Path
-from types import SimpleNamespace
+from core_utils.project.lab_settings import LabSettings
 
 # pylint: disable=too-many-locals, undefined-variable, unused-import
 from lab_7_llm.main import RawDataImporter, RawDataPreprocessor, report_time
-
-SETTINGS_PATH = Path(__file__).resolve().with_name("settings.json")
 
 @report_time
 def main() -> None:
     """
     Run the translation pipeline.
     """
-    with SETTINGS_PATH.open("r", encoding="utf-8") as f:
-        settings = json.load(f, object_hook=lambda d: SimpleNamespace(**d))
+    current_path = Path(__file__).parent
+    settings = LabSettings(current_path / "settings.json")
 
     importer = RawDataImporter(settings.parameters.dataset)
     importer.obtain()
