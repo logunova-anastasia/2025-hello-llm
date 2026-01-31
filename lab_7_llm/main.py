@@ -170,12 +170,12 @@ class LLMPipeline(AbstractLLMPipeline):
         out = stats.summary_list[-1].output_size
 
         return {
-            "input_shape": [self._batch_size, self._max_length],
+            "input_shape": [int(self._batch_size), int(self._max_length)],
             "embedding_size": int(config.d_model),
             "output_shape": list(out),
             "num_trainable_params": int(stats.trainable_params),
             "vocab_size": int(config.vocab_size),
-            "size": int(stats.total_params),
+            "size": int(stats.total_param_bytes),
             "max_context_length": int(self._max_length)
         }
 
